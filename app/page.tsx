@@ -1,11 +1,60 @@
-export default function Home() {
+import Image from "next/image";
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <h1>start</h1>
-      <button>test</button> 
-      <button>Войти</button>
-      <button>Подключить</button>
-    </div>
-   
+    <main className="min-h-screen flex flex-col">
+      <header className="w-full bg-gray-200 px-8 py-4 flex items-center justify-between shadow-sm">
+        <div className="text-black  flex items-center gap-2 text-xl font-semibold">
+          <img src="image71.svg" alt="" />
+          <span>AutoFixFlow</span>
+        </div>
+
+        <nav className="flex items-center gap-20 text-sm font-medium">
+          <a href="main.tsx" className=" text-black hover:text-gray-600 transition">
+            Главная
+          </a>
+          <a href="#" className=" text-black hover:text-gray-600 transition">
+            Тарифы
+          </a>
+          <a href="#" className=" text-black hover:text-gray-600 transition">
+            О нас
+          </a>
+        </nav>
+
+        <button className="rounded-full px-6 py-2 bg-black text-white hover:bg-gray-800 transition">
+          Войти
+        </button>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative w-full flex-1">
+        <div className="absolute inset-0">
+          <Image
+            src="/hero-car.png"
+            alt="Автомобиль салон"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto px-8 py-24 text-white">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+            Контроль над <br />
+            мастерской в <br />
+            один клик
+          </h1>
+
+          <p className="text-lg md:text-xl mb-2">
+            Ваш комфорт и безопасность — наш приоритет
+          </p>
+          <p className="text-base md:text-lg opacity-90">
+            Профессиональный сервис для вашего авто — быстро, качественно и
+            надёжно
+          </p>
+        </div>
+      </section>
+    </main>
   );
 }
