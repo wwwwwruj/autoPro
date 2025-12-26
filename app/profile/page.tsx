@@ -159,9 +159,9 @@ export default function ProfilePage() {
         >
           Назад на главную
         </Link>
-        <Link href="/admin" className="text-red-600 font-medium">
-            Админ-Панель (просмотр)
-          </Link>
+        <Link href="/admin" className=" block text-center text-black text-sm font-medium">
+          Админ-Панель (просмотр)
+        </Link>
         <button
           onClick={handleLogout}
           className="block w-full text-sm text-red-700 hover:underline mt-4"
