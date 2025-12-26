@@ -1,7 +1,24 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function HomePage() {
+  const [isAuth, setIsAuth] = useState(false);
+  const [role, setRole] = useState<"user" | "admin" | null>(null);
+
+  useEffect(() => {
+    const auth = localStorage.getItem("isAuth");
+    const savedRole = localStorage.getItem("role") as "user" | "admin" | null;
+    if (auth === "true" && savedRole) {
+      setIsAuth(true);
+      setRole(savedRole);
+    }
+  }, []);
+
+  const profileHref = role === "admin" ? "/admin" : "/profile";
+
   return (
     <main className="min-h-screen bg-[#cfcfcf]">
       <header className="flex items-center justify-between px-20 py-6">
@@ -11,22 +28,31 @@ export default function HomePage() {
         </div>
         <div className="flex items-center gap-20">
           <nav className="flex gap-25 text-sm font-bold text-black">
-            <a href="#">Тарифы</a>
-            <a href="#">О нас</a>
+            <Link href="/tariffs">Тарифы</Link>
+            <Link href="/about">О нас</Link>
           </nav>
-          <Link
-            href="/login"
-            className="rounded-full bg-gray-900 px-8 py-2 text-sm text-white hover:text-gray-200"
-          >
-            Войти / Зарегистрироваться
-          </Link>
-          
+
+          {isAuth ? (
+            <Link
+              href={role === "user" ? "/profile" : "/admin"}
+              className="rounded-full bg-gray-900 px-8 py-2 text-sm text-white hover:text-gray-200"
+            >
+              {role === "user" ? "Профиль пользователя" : "Профиль админа"}
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="rounded-full bg-gray-900 px-8 py-2 text-sm text-white hover:text-gray-200"
+            >
+              Войти 
+            </Link>
+          )}
         </div>
       </header>
 
-      <section className="relative px-20 pt-24 ">
-        <div className="relative flex items-center -translate-y-5.5 ">
-          <div className="max-w-xl ">
+      <section className="relative px-20 pt-24">
+        <div className="relative flex items-center -translate-y-5.5">
+          <div className="max-w-xl">
             <h1 className="text-[56px] font-extrabold leading-tight text-black">
               AutoFixFlow
               <br />
@@ -35,14 +61,14 @@ export default function HomePage() {
               без задержек
             </h1>
           </div>
-          <div className="relative flex items-center ">
+          <div className="relative flex items-center">
             {/* Красный круг */}
             <div className="absolute h-[520px] w-[520px] rounded-full bg-red-700" />
             {/* Машина */}
             <img
               src="/car.png"
               alt="car"
-              className="relative z-10 w-[600px] translate-x-50 "
+              className="relative z-10 w-[600px] translate-x-50"
             />
             {/* Тень под машиной */}
             <div className="absolute bottom-10 z-0 translate-x-50 h-[90px] w-[520px] rounded-full bg-black/30 blur-2xl" />
@@ -51,11 +77,13 @@ export default function HomePage() {
       </section>
 
       <section className="mt-24 flex justify-center bg-[#e5e5e5] py-12">
-        <button className="rounded-xl bg-red-700 px-20 py-8 text-2xl font-semibold text-white">
+        <Link
+          href={isAuth ? profileHref : "/login"}
+          className="rounded-xl bg-red-700 px-20 py-8 text-2xl font-semibold text-white hover:bg-red-800 transition"
+        >
           Начать ремонт
-        </button>
+        </Link>
       </section>
-      
     </main>
   );
 }
